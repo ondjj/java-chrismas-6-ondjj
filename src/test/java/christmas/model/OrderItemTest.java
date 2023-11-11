@@ -42,4 +42,10 @@ class OrderItemTest {
         assertThrows(IllegalStateException.class,
                 () -> OrderItem.of("티본스테이크-1,바비큐립-1,초코케이크-2,초코케이크-2,제로콜라-1"));
     }
+
+    @Test
+    void 예외_주문_개수_초과() {
+        assertThrows(IllegalStateException.class,
+                ()-> OrderItem.of("티본스테이크-1,바비큐립-1,초코케이크-17,초코케이크-1,제로콜라-1"));
+    }
 }

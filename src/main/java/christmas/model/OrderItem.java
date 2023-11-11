@@ -1,7 +1,7 @@
 package christmas.model;
 
-import static christmas.util.validators.OrderItemValidator.containsValidMenuItems;
 import static christmas.util.validators.OrderItemValidator.validFormat;
+import static christmas.util.validators.OrderItemValidator.validateOrderData;
 
 import christmas.util.Parser;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class OrderItem {
     public static OrderItem of(String date) {
         validFormat(date);
         Map<String,Integer> parseData = Parser.parseString(date);
-        containsValidMenuItems(parseData);
+        validateOrderData(parseData);
         return new OrderItem(parseData);
     }
 
