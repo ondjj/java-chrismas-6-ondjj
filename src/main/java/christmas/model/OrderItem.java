@@ -3,6 +3,7 @@ package christmas.model;
 import static christmas.util.validators.OrderItemValidator.validFormat;
 import static christmas.util.validators.OrderItemValidator.validateOrderData;
 
+import christmas.dto.OrderItemDTO;
 import christmas.util.Parser;
 import java.util.Map;
 
@@ -18,6 +19,10 @@ public class OrderItem {
         Map<String,Integer> parseData = Parser.parseString(date);
         validateOrderData(parseData);
         return new OrderItem(parseData);
+    }
+
+    public OrderItemDTO toDTO() {
+        return new OrderItemDTO(item);
     }
 
     public int getCount(String itemName) {
