@@ -13,10 +13,9 @@ public class InputView {
         System.out.println(WELCOME_MESSAGE);
     }
 
-    public int readDate() {
+    public VisitDate readDate() {
         System.out.println(READ_DATE);
-        VisitDate inputDate = VisitDate.of(Console.readLine());
-        return inputDate.getDate();
+        return VisitDate.of(Console.readLine());
     }
 
     public OrderItem readOrder() {
