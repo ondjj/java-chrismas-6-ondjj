@@ -33,8 +33,8 @@ class DdayEventTest {
         ddayEvent = DdayEvent.of(startDay, price);
         endDayEvent = DdayEvent.of(endDay, price);
 
-        assertThat(ddayEvent.itemDiscount()).isEqualTo(12000);
-        assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
+        assertThat(ddayEvent.itemDiscount()).isEqualTo(1000);
+        assertThat(endDayEvent.itemDiscount()).isEqualTo(3400);
     }
 
     @DisplayName("D-Day에 따라 할인이 적용됩니다.")
@@ -44,8 +44,8 @@ class DdayEventTest {
         endDayEvent = DdayEvent.of(endDay, price);
         Event overDayEvent = DdayEvent.of(endDay + 1, price);
 
-        assertThat(ddayEvent.itemDiscount()).isEqualTo(12000);
-        assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
-        assertThat(overDayEvent.itemDiscount()).isEqualTo(13000);
+        assertThat(ddayEvent.itemDiscount()).isEqualTo(1000);
+        assertThat(endDayEvent.itemDiscount()).isEqualTo(3400);
+        assertThat(overDayEvent.itemDiscount()).isEqualTo(0);
     }
 }

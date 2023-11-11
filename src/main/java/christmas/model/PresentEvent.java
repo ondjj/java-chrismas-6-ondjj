@@ -1,5 +1,7 @@
 package christmas.model;
 
+import static christmas.util.Constants.ZERO;
+
 public class PresentEvent implements Event {
     private static final int PRESENT_DISCOUNT = 25000;
     private static final int PRESENT_RANGE = 120000;
@@ -17,9 +19,9 @@ public class PresentEvent implements Event {
     @Override
     public Integer itemDiscount() {
         if (isPresentRange()) {
-            return price - PRESENT_DISCOUNT;
+            return PRESENT_DISCOUNT;
         }
-        return price;
+        return ZERO;
     }
 
     private boolean isPresentRange() {

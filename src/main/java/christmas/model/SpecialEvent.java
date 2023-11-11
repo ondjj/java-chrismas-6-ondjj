@@ -2,6 +2,7 @@ package christmas.model;
 
 import static christmas.util.Constants.MONTH;
 import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -11,23 +12,21 @@ public class SpecialEvent implements Event {
     private static final int CHRISTMAS = 25;
 
     private final LocalDate date;
-    private final Integer price;
 
-    private SpecialEvent(final Integer day, final Integer price) {
+    private SpecialEvent(final Integer day) {
         this.date = LocalDate.of(YEAR, MONTH, day);
-        this.price = price;
     }
 
-    public static SpecialEvent of(final Integer day, final Integer price) {
-        return new SpecialEvent(day, price);
+    public static SpecialEvent of(final Integer day) {
+        return new SpecialEvent(day);
     }
 
     @Override
     public Integer itemDiscount() {
         if (isEventDate()) {
-            return price - SPECIAL_DISCOUNT;
+            return SPECIAL_DISCOUNT;
         }
-        return price;
+        return ZERO;
     }
 
     private boolean isEventDate() {

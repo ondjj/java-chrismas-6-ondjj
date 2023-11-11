@@ -9,32 +9,33 @@ import org.junit.jupiter.api.Test;
 class PresentEventTest {
     private PresentEvent overPresentEvent;
     private PresentEvent underPresentEvent;
-    private Integer underPrice;
-    private Integer overPrice;
 
     @BeforeEach
     void setUp() {
-        underPrice = 11999;
-        overPrice = 120000;
+        Integer underPrice = 11999;
+        Integer overPrice = 120000;
         underPresentEvent = PresentEvent.of(underPrice);
         overPresentEvent = PresentEvent.of(overPrice);
     }
 
     @Test
     void 생성_테스트() {
-        overPresentEvent = PresentEvent.of(underPrice);
+        assertThat(underPresentEvent).isNotNull();
         assertThat(overPresentEvent).isNotNull();
     }
 
     @Test
     void 할인_금액_테스트() {
-        assertThat(overPresentEvent.itemDiscount()).isEqualTo(overPrice - 25000);
+        assertThat(overPresentEvent.itemDiscount()).isEqualTo(25000);
     }
 
     @DisplayName("가격에 따라 증정 아이템 가격을 계산합니다.")
     @Test
     void 증정_범위_테스트() {
-        assertThat(underPresentEvent.itemDiscount()).isEqualTo(11999);
-        assertThat(overPresentEvent.itemDiscount()).isEqualTo(95000);
+        // 증정 범위 내의 경우에는 할인 금액이 가격과 같아야 합니다.
+        assertThat(underPresentEvent.itemDiscount()).isEqualTo(0);
+
+        // 증정 범위를 넘어간 경우에는 할인 금액이 PRESENT_DISCOUNT와 같아야 합니다.
+        assertThat(overPresentEvent.itemDiscount()).isEqualTo(25000);
     }
 }

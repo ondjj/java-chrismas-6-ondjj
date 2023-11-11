@@ -2,6 +2,7 @@ package christmas.model;
 
 import static christmas.util.Constants.MONTH;
 import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import java.time.LocalDate;
 
@@ -27,11 +28,11 @@ public class DdayEvent implements Event {
         if (isEventDate()) {
             return calculatePrice();
         }
-        return price;
+        return ZERO;
     }
 
     private int calculatePrice() {
-        return price - (D_DAY_DISCOUNT + (date.getDayOfMonth() * INCREMENT));
+        return D_DAY_DISCOUNT + (date.getDayOfMonth() * INCREMENT);
     }
 
     private boolean isEventDate() {
