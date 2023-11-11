@@ -5,7 +5,7 @@ import static christmas.util.Constants.YEAR;
 
 import java.time.LocalDate;
 
-public class DdayEvent implements EventCalendar {
+public class DdayEvent implements Event {
     private static final int D_DAY_DISCOUNT = 900;
     private static final int CHRISTMAS = 25;
     private static final int INCREMENT = 100;

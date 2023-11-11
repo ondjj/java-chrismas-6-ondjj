@@ -1,7 +1,7 @@
 package christmas.model;
 
 
-public interface EventCalendar {
+public interface Event {
     Integer itemDiscount();
 
     default boolean isEventDate() {

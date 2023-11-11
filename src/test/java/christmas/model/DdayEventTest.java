@@ -1,6 +1,7 @@
 package christmas.model;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +11,9 @@ class DdayEventTest {
     private Integer startDay;
     private Integer endDay;
     private Integer price;
-    private EventCalendar ddayEvent;
-    private EventCalendar endDayEvent;
-    private EventCalendar overDayEvent;
+    private Event ddayEvent;
+    private Event endDayEvent;
+    private Event overDayEvent;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +26,7 @@ class DdayEventTest {
     void 생성_테스트() {
         ddayEvent = DdayEvent.of(startDay, price);
 
-        Assertions.assertThat(ddayEvent).isNotNull();
+        assertThat(ddayEvent).isNotNull();
     }
 
     @Test
@@ -33,8 +34,8 @@ class DdayEventTest {
         ddayEvent = DdayEvent.of(startDay, price);
         endDayEvent = DdayEvent.of(endDay, price);
 
-        Assertions.assertThat(ddayEvent.itemDiscount()).isEqualTo(12000);
-        Assertions.assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
+        assertThat(ddayEvent.itemDiscount()).isEqualTo(12000);
+        assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
     }
 
     @Test
@@ -43,8 +44,8 @@ class DdayEventTest {
         endDayEvent = DdayEvent.of(endDay, price);
         overDayEvent = DdayEvent.of(endDay + 1, price);
 
-        Assertions.assertThat(ddayEvent.isEventDate()).isTrue();
-        Assertions.assertThat(endDayEvent.isEventDate()).isTrue();
-        Assertions.assertThat(overDayEvent.isEventDate()).isFalse();
+        assertThat(ddayEvent.isEventDate()).isTrue();
+        assertThat(endDayEvent.isEventDate()).isTrue();
+        assertThat(overDayEvent.isEventDate()).isFalse();
     }
 }
