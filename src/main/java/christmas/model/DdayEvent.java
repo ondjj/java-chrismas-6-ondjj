@@ -24,11 +24,17 @@ public class DdayEvent implements Event {
 
     @Override
     public Integer itemDiscount() {
+        if (isEventDate()) {
+            return calculatePrice();
+        }
+        return price;
+    }
+
+    private int calculatePrice() {
         return price - (D_DAY_DISCOUNT + (date.getDayOfMonth() * INCREMENT));
     }
 
-    @Override
-    public boolean isEventDate() {
+    private boolean isEventDate() {
         return date.getDayOfMonth() <= CHRISTMAS;
     }
 }

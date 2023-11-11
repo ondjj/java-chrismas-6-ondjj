@@ -16,10 +16,13 @@ public class PresentEvent implements Event {
 
     @Override
     public Integer itemDiscount() {
-        return price - PRESENT_DISCOUNT;
+        if (isPresentRange()) {
+            return price - PRESENT_DISCOUNT;
+        }
+        return price;
     }
 
-    public boolean isPresentRange() {
+    private boolean isPresentRange() {
         return price >= PRESENT_RANGE;
     }
 }

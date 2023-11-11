@@ -3,6 +3,7 @@ package christmas.model;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PresentEventTest {
@@ -30,9 +31,10 @@ class PresentEventTest {
         assertThat(overPresentEvent.itemDiscount()).isEqualTo(overPrice - 25000);
     }
 
+    @DisplayName("가격에 따라 증정 아이템 가격을 계산합니다.")
     @Test
     void 증정_범위_테스트() {
-        assertThat(underPresentEvent.isPresentRange()).isFalse();
-        assertThat(overPresentEvent.isPresentRange()).isTrue();
+        assertThat(underPresentEvent.itemDiscount()).isEqualTo(11999);
+        assertThat(overPresentEvent.itemDiscount()).isEqualTo(95000);
     }
 }

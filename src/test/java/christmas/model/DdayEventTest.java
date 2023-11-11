@@ -3,6 +3,7 @@ package christmas.model;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -13,7 +14,6 @@ class DdayEventTest {
     private Integer price;
     private Event ddayEvent;
     private Event endDayEvent;
-    private Event overDayEvent;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +25,6 @@ class DdayEventTest {
     @Test
     void 생성_테스트() {
         ddayEvent = DdayEvent.of(startDay, price);
-
         assertThat(ddayEvent).isNotNull();
     }
 
@@ -38,14 +37,15 @@ class DdayEventTest {
         assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
     }
 
+    @DisplayName("D-Day에 따라 할인이 적용됩니다.")
     @Test
     void 이벤트_기간_테스트() {
         ddayEvent = DdayEvent.of(startDay, price);
         endDayEvent = DdayEvent.of(endDay, price);
-        overDayEvent = DdayEvent.of(endDay + 1, price);
+        Event overDayEvent = DdayEvent.of(endDay + 1, price);
 
-        assertThat(ddayEvent.isEventDate()).isTrue();
-        assertThat(endDayEvent.isEventDate()).isTrue();
-        assertThat(overDayEvent.isEventDate()).isFalse();
+        assertThat(ddayEvent.itemDiscount()).isEqualTo(12000);
+        assertThat(endDayEvent.itemDiscount()).isEqualTo(9600);
+        assertThat(overDayEvent.itemDiscount()).isEqualTo(13000);
     }
 }
