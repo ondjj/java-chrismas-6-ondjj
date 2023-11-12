@@ -3,6 +3,7 @@ package christmas.controller;
 import christmas.dto.OrderItemDTO;
 import christmas.model.EventBadge;
 import christmas.model.EventGroup;
+import christmas.model.EventGroupFacade;
 import christmas.model.EventManager;
 import christmas.model.Order;
 import christmas.model.OrderItem;
@@ -30,14 +31,15 @@ public class ChristmasController {
     }
 
     public void beforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
-        outputView.printBeforePrice(orderItem.getTotalPrice());
+        outputView.printBeforePrice(orderItem.totalPrice());
         Order order = Order.createOrder(visitDate, orderItem);
         benefitDetails(order);
     }
 
     public void benefitDetails(Order order) {
-        EventGroup eventGroup = new EventGroup(order);
-        EventManager eventManager = EventManager.of(eventGroup);
+        EventGroup eventGroup = EventGroup.of(order);
+        EventGroupFacade eventGroupFacade = EventGroupFacade.of(eventGroup);
+        EventManager eventManager = EventManager.of(eventGroupFacade);
         outputView.printPresent(eventManager.gift());
         outputView.printBenefit(eventManager.getEventDetails());
         outputView.printTotalBenefit(eventManager.totalBenefit());

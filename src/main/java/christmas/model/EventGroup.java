@@ -1,20 +1,27 @@
 package christmas.model;
 
+import static christmas.util.Constants.ZERO;
+
 import christmas.util.enums.MenuType;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class EventGroup {
     private final Order order;
 
-    private DdayEvent ddayEvent;
-    private WeekdayEvent weekdayEvent;
-    private WeekendEvent weekendEvent;
-    private SpecialEvent specialEvent;
-    private PresentEvent presentEvent;
+    private DdayEventStrategy ddayEvent;
+    private WeekdayEventStrategy weekdayEvent;
+    private WeekendEventStrategy weekendEvent;
+    private SpecialEventStrategy specialEvent;
+    private PresentEventStrategy presentEvent;
 
-    public EventGroup(Order order) {
+    private EventGroup(Order order) {
         this.order = order;
         initializeEvents();
+    }
+
+    public static EventGroup of(Order order) {
+        return new EventGroup(order);
     }
 
     public Integer getOrderBeforeTotalPrice() {
@@ -26,13 +33,13 @@ public class EventGroup {
     }
 
     public Integer totalBenefit() {
-        Integer total = 0;
-        total += presentEvent.itemDiscount();
-        total += weekendEvent.getWon();
-        total += weekdayEvent.getWon();
-        total += specialEvent.getWon();
-        total += ddayEvent.calculatePrice();
-        return total;
+        return Stream.of(
+                presentEvent.itemDiscount(),
+                specialEvent.itemDiscount(),
+                weekdayEvent.calculateDiscount(),
+                weekendEvent.calculateDiscount(),
+                ddayEvent.calculateDiscount()
+        ).reduce(ZERO, Integer::sum);
     }
 
     public String giftContent() {
@@ -60,10 +67,10 @@ public class EventGroup {
     }
 
     private void initializeEvents() {
-        ddayEvent = DdayEvent.of(order.getOrderDate());
-        weekdayEvent = WeekdayEvent.of(order.getOrderDate(), order.findMenuCount(MenuType.DESSERT));
-        weekendEvent = WeekendEvent.of(order.getOrderDate(), order.findMenuCount(MenuType.MAIN));
-        specialEvent = SpecialEvent.of(order.getOrderDate());
-        presentEvent = PresentEvent.of(order.getBeforeTotalPrice());
+        ddayEvent = DdayEventStrategy.of(order.getOrderDate());
+        weekdayEvent = WeekdayEventStrategy.of(order.getOrderDate(), order.findMenuCount(MenuType.DESSERT));
+        weekendEvent = WeekendEventStrategy.of(order.getOrderDate(), order.findMenuCount(MenuType.MAIN));
+        specialEvent = SpecialEventStrategy.of(order.getOrderDate());
+        presentEvent = PresentEventStrategy.of(order.getBeforeTotalPrice());
     }
 }

@@ -36,7 +36,6 @@ public class OrderItem {
 
     public Map<MenuType, Integer> getItemQuantity() {
         Map<MenuType, Integer> menuCount = new LinkedHashMap<>();
-
         for (Map.Entry<String, Integer> entry : item.entrySet()) {
             String itemName = entry.getKey();
             Integer quantity = entry.getValue();
@@ -47,12 +46,13 @@ public class OrderItem {
     }
 
     private void validateDrinkOrder() {
-        if (item.keySet().stream().allMatch(menuName -> Menu.getMenuByName(menuName).getType() == MenuType.DRINK)) {
+        if (item.keySet().stream()
+                .allMatch(menuName -> Menu.getMenuByName(menuName).getType() == MenuType.DRINK)) {
             throw new IllegalArgumentException("Drink menu cannot be ordered alone.");
         }
     }
 
-    public Integer getTotalPrice() {
+    public Integer totalPrice() {
         return item.entrySet().stream()
                 .mapToInt(entry -> Menu.getMenuByName(entry.getKey()).getPrice() * entry.getValue())
                 .sum();

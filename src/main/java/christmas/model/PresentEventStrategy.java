@@ -1,30 +1,28 @@
 package christmas.model;
 
-import static christmas.util.Constants.DASH;
+import static christmas.util.Constants.ZERO;
 
-import christmas.util.Parser;
 import christmas.util.enums.EventType;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PresentEvent implements Event {
+public class PresentEventStrategy implements EventStrategy {
     private static final int PRESENT_DISCOUNT = 25000;
     private static final int PRESENT_RANGE = 120000;
 
     private final Integer price;
 
-    private PresentEvent(final Integer price) {
+    private PresentEventStrategy(final Integer price) {
         this.price = price;
     }
 
-    public static PresentEvent of(final Integer price) {
-        return new PresentEvent(price);
+    public static PresentEventStrategy of(final Integer price) {
+        return new PresentEventStrategy(price);
     }
 
     @Override
     public Integer itemDiscount() {
         if (!isPresentRange()){
-            return 0;
+            return ZERO;
         }
         return PRESENT_DISCOUNT;
     }
@@ -36,12 +34,7 @@ public class PresentEvent implements Event {
 
     @Override
     public Map<String, String> extractEventDetails() {
-        Map<String, String> details = new LinkedHashMap<>();
-        if (isPresentRange()) {
-            return addEventDetails(details, itemDiscount());
-        }
-        details.put(getEventType().getNone(), getEventType().getNone());
-        return details;
+        return EventUtils.createEventDetails(getEventType(), itemDiscount());
     }
 
     public String getPresent() {
@@ -49,11 +42,6 @@ public class PresentEvent implements Event {
             return getEventType().getPresentDescription();
         }
         return getEventType().getNone();
-    }
-
-    private Map<String,String> addEventDetails(Map<String, String> details, int discount) {
-        details.put(getEventType().getDescription(), DASH + Parser.decimalFormatter(discount));
-        return details;
     }
 
     private boolean isPresentRange() {

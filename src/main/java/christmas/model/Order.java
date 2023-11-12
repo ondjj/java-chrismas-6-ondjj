@@ -20,7 +20,7 @@ public class Order {
     }
 
     public Integer getBeforeTotalPrice() {
-        return orderItem.getTotalPrice();
+        return orderItem.totalPrice();
     }
 
     public Integer getOrderDate() {

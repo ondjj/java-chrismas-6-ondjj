@@ -6,16 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PresentEventTest {
-    private PresentEvent overPresentEvent;
-    private PresentEvent underPresentEvent;
+class PresentEventTestStrategy {
+    private PresentEventStrategy overPresentEvent;
+    private PresentEventStrategy underPresentEvent;
 
     @BeforeEach
     void setUp() {
         Integer underPrice = 11999;
         Integer overPrice = 120000;
-        underPresentEvent = PresentEvent.of(underPrice);
-        overPresentEvent = PresentEvent.of(overPrice);
+        underPresentEvent = PresentEventStrategy.of(underPrice);
+        overPresentEvent = PresentEventStrategy.of(overPrice);
     }
 
     @Test

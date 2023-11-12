@@ -15,7 +15,7 @@ public class Parser {
     private static final Integer DEFAULT_KEY_INDEX = 0;
     private static final Integer DEFAULT_VALUE_INDEX = 1;
 
-    public static Map<String,Integer> parseString(String orderItem) {
+    public static Map<String, Integer> parseString(String orderItem) {
         List<String> parseComa = Arrays.asList(orderItem.split(SPLIT_REGEX_COMMA));
         return parseDash(parseComa);
     }
@@ -25,20 +25,15 @@ public class Parser {
         return decimalFormat.format(won);
     }
 
-    private static Map<String,Integer> parseDash(final List<String> parseComa) {
-        Map<String,Integer> uniqueData = new LinkedHashMap<>();
+    private static Map<String, Integer> parseDash(final List<String> parseComa) {
+        Map<String, Integer> uniqueData = new LinkedHashMap<>();
 
-        for(String item : parseComa) {
+        for (String item : parseComa) {
             List<String> parseDash = Arrays.asList(item.split(SPLIT_REGEX_DASH));
             validUnique(uniqueData, parseDash);
             uniqueData.put(parseDash.get(DEFAULT_KEY_INDEX), Integer.parseInt(parseDash.get(DEFAULT_VALUE_INDEX)));
         }
         return uniqueData;
-    }
-
-    public static int parseDiscount(String discountString) {
-        String numericString = discountString.replaceAll("[^\\d-]", "");
-        return Integer.parseInt(numericString);
     }
 
     private static void validUnique(final Map<String, Integer> uniqueData, final List<String> parseDash) {

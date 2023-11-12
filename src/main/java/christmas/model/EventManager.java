@@ -4,73 +4,59 @@ import java.util.Map;
 
 public class EventManager {
     private static final Integer EVENT_RANGE = 10000;
+    private static final String NONE = "없음";
+    private static final String WON = "원";
+    private static final String LINE = "\n";
+    private static final String COLON = ": ";
 
-    private final EventGroup eventGroup;
+    private final EventGroupFacade eventGroupFacade;
 
-    private EventManager(EventGroup eventGroup) {
-        this.eventGroup = eventGroup;
+    private EventManager(EventGroupFacade eventGroupFacade) {
+        this.eventGroupFacade = eventGroupFacade;
     }
 
-    public static EventManager of(EventGroup eventGroup) {
-        return new EventManager(eventGroup);
+    public static EventManager of(EventGroupFacade eventGroupFacade) {
+        return new EventManager(eventGroupFacade);
     }
 
     public StringBuilder getEventDetails() {
         StringBuilder eventDetails = new StringBuilder();
-        if (!isEventRange()){
-            return eventDetails.append("없음");
+        if (!isEventRange()) {
+            return eventDetails.append(NONE);
         }
-        addEventDetails(eventDetails, dDay());
-        addEventDetails(eventDetails, weekday());
-        addEventDetails(eventDetails, weekend());
-        addEventDetails(eventDetails, special());
-        addEventDetails(eventDetails, present());
+        addEventDetails(eventDetails, eventGroupFacade.dDay());
+        addEventDetails(eventDetails, eventGroupFacade.weekday());
+        addEventDetails(eventDetails, eventGroupFacade.weekend());
+        addEventDetails(eventDetails, eventGroupFacade.special());
+        addEventDetails(eventDetails, eventGroupFacade.present());
         return eventDetails;
     }
 
     public Integer actualBenefit() {
-        return eventGroup.actualBenefit();
+        return eventGroupFacade.actualBenefit();
     }
 
     public Integer totalBenefit() {
-        return eventGroup.totalBenefit();
+        return eventGroupFacade.totalBenefit();
     }
 
     public String gift() {
-        return eventGroup.giftContent();
-    }
-
-    private Map<String, String> present() {
-        return eventGroup.present();
-    }
-
-    private Map<String,String> dDay() {
-        return eventGroup.dDay();
-    }
-
-    private Map<String, String> special() {
-        return eventGroup.special();
-    }
-
-    private Map<String, String> weekday() {
-        return eventGroup.weekday();
-    }
-
-    private Map<String, String> weekend() {
-        return eventGroup.weekend();
+        return eventGroupFacade.giftContent();
     }
 
     private boolean isEventRange() {
-        return eventGroup.getOrderBeforeTotalPrice() >= EVENT_RANGE;
+        return eventGroupFacade.getOrderBeforeTotalPrice() >= EVENT_RANGE;
     }
 
     private void addEventDetails(StringBuilder eventDetails, Map<String, String> details) {
-        if (!validEventName(details).equals("없음")) {
-            eventDetails.append(validEventName(details));
-            eventDetails.append(": ");
-            eventDetails.append(validEventSale(details));
-            eventDetails.append("원");
-            eventDetails.append("\n");
+        String eventName = validEventName(details);
+        String sale = validEventSale(details);
+        if (!eventName.equals(NONE)) {
+            eventDetails.append(eventName)
+                        .append(COLON)
+                        .append(sale)
+                        .append(WON)
+                        .append(LINE);
         }
     }
 

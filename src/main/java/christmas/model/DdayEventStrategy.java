@@ -3,37 +3,37 @@ package christmas.model;
 import static christmas.util.Constants.DASH;
 import static christmas.util.Constants.MONTH;
 import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import christmas.util.Parser;
 import christmas.util.enums.EventType;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class WeekdayEvent implements Event {
-    private static final int WEEK_DAY_DISCOUNT = 2023;
+public class DdayEventStrategy implements EventStrategy {
+    private static final int D_DAY_DISCOUNT = 900;
+    private static final int CHRISTMAS = 25;
+    private static final int INCREMENT = 100;
 
     private final LocalDate date;
-    private final Integer quantity;
 
-    private WeekdayEvent(final Integer day, final Integer quantity) {
+    private DdayEventStrategy(final Integer day) {
         this.date = LocalDate.of(YEAR, MONTH, day);
-        this.quantity = quantity;
     }
 
-    public static WeekdayEvent of(final Integer day, final Integer quantity) {
-        return new WeekdayEvent(day, quantity);
+    public static DdayEventStrategy of(final Integer day) {
+        return new DdayEventStrategy(day);
     }
 
     @Override
     public Integer itemDiscount() {
-        return WEEK_DAY_DISCOUNT;
+        return calculateDiscount();
     }
 
     @Override
     public EventType getEventType() {
-        return EventType.WEEKDAY;
+        return EventType.D_DAY;
     }
 
     @Override
@@ -47,19 +47,22 @@ public class WeekdayEvent implements Event {
     }
 
     private Map<String, String> getDetailEvent(final Map<String, String> details) {
-        details.put(getEventType().getDescription(), DASH + Parser.decimalFormatter(getWon()));
+        details.put(getEventType().getDescription(), DASH + Parser.decimalFormatter(itemDiscount()));
         return details;
     }
 
-    public int getWon() {
+    public int calculateDiscount() {
         if (isEventDate()) {
-            return itemDiscount() * this.quantity;
+            return getDiscount();
         }
-        return 0;
+        return ZERO;
+    }
+
+    private int getDiscount() {
+        return D_DAY_DISCOUNT + (date.getDayOfMonth() * INCREMENT);
     }
 
     private boolean isEventDate() {
-        DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return dayOfWeek != DayOfWeek.FRIDAY && dayOfWeek != DayOfWeek.SATURDAY;
+        return date.getDayOfMonth() <= CHRISTMAS;
     }
 }
