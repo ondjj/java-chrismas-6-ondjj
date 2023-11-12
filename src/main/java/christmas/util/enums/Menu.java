@@ -14,12 +14,12 @@ public enum Menu {
     SEAFOOD_PASTA(MenuType.MAIN,"해산물파스타", 35000),
     CHRISTMAS_PASTA(MenuType.MAIN,"크리스마스파스타", 25000),
 
-    CHOCO_CAKE(MenuType.DESSERT,"초코케이크", 15_000),
-    ICE_CREAM(MenuType.DESSERT,"아이스크림", 5_000),
+    CHOCO_CAKE(MenuType.DESSERT,"초코케이크", 15000),
+    ICE_CREAM(MenuType.DESSERT,"아이스크림", 5000),
 
-    ZERO_COKE(MenuType.DRINK,"제로콜라", 3_000),
-    RED_WINE(MenuType.DRINK,"레드와인", 60_000),
-    CHAMPAGNE(MenuType.DRINK,"샴페인", 25_000);
+    ZERO_COKE(MenuType.DRINK,"제로콜라", 3000),
+    RED_WINE(MenuType.DRINK,"레드와인", 60000),
+    CHAMPAGNE(MenuType.DRINK,"샴페인", 25000);
 
     private final MenuType type;
     private final String name;
@@ -38,16 +38,20 @@ public enum Menu {
                 .forEach(menu -> ENTIRE_MENU.put(menu.getName(), menu));
     }
 
-    private MenuType getType() {
+    public MenuType getType() {
         return type;
     }
 
-    private String getName() {
+    public String getName() {
         return name;
     }
 
-    private int getPrice() {
+    public int getPrice() {
         return price;
+    }
+
+    public static Menu getMenuByName(String name) {
+        return ENTIRE_MENU.get(name);
     }
 
     public static boolean isValidMenu(String name) {

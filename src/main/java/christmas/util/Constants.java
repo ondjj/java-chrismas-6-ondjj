@@ -5,4 +5,5 @@ public class Constants {
     public final static Integer YEAR = 2023;
     public final static Integer MONTH = 12;
     public final static Integer ZERO = 0;
+    public final static String DASH = "-";
 }
