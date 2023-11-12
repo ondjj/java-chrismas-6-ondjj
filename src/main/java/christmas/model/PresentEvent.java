@@ -1,6 +1,11 @@
 package christmas.model;
 
-import static christmas.util.Constants.ZERO;
+import static christmas.util.Constants.DASH;
+
+import christmas.util.Parser;
+import christmas.util.enums.EventType;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class PresentEvent implements Event {
     private static final int PRESENT_DISCOUNT = 25000;
@@ -18,10 +23,37 @@ public class PresentEvent implements Event {
 
     @Override
     public Integer itemDiscount() {
-        if (isPresentRange()) {
-            return PRESENT_DISCOUNT;
+        if (!isPresentRange()){
+            return 0;
         }
-        return ZERO;
+        return PRESENT_DISCOUNT;
+    }
+
+    @Override
+    public EventType getEventType() {
+        return EventType.PRESENT;
+    }
+
+    @Override
+    public Map<String, String> extractEventDetails() {
+        Map<String, String> details = new LinkedHashMap<>();
+        if (isPresentRange()) {
+            return addEventDetails(details, itemDiscount());
+        }
+        details.put(getEventType().getNone(), getEventType().getNone());
+        return details;
+    }
+
+    public String getPresent() {
+        if (isPresentRange()){
+            return getEventType().getPresentDescription();
+        }
+        return getEventType().getNone();
+    }
+
+    private Map<String,String> addEventDetails(Map<String, String> details, int discount) {
+        details.put(getEventType().getDescription(), DASH + Parser.decimalFormatter(discount));
+        return details;
     }
 
     private boolean isPresentRange() {
