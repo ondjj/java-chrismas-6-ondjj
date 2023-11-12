@@ -2,6 +2,7 @@ package christmas.model;
 
 import static christmas.util.Constants.*;
 
+import christmas.util.EventUtils;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;

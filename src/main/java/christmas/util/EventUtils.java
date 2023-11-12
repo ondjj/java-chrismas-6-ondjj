@@ -1,8 +1,7 @@
-package christmas.model;
+package christmas.util;
 
 import static christmas.util.Constants.*;
 
-import christmas.util.Parser;
 import christmas.util.enums.EventType;
 import java.util.LinkedHashMap;
 import java.util.Map;

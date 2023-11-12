@@ -3,6 +3,7 @@ package christmas.model;
 import static christmas.util.Constants.MONTH;
 import static christmas.util.Constants.YEAR;
 
+import christmas.util.EventUtils;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;

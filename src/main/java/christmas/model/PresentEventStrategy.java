@@ -2,6 +2,7 @@ package christmas.model;
 
 import static christmas.util.Constants.ZERO;
 
+import christmas.util.EventUtils;
 import christmas.util.enums.EventType;
 import java.util.Map;
 
