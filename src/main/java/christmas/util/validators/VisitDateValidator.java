@@ -5,7 +5,11 @@ import static christmas.util.enums.ErrorMessage.INVALID_DATE;
 
 public class VisitDateValidator {
     public static Integer isValidDate(String date) {
-        return Integer.valueOf(date);
+        try {
+            return Integer.valueOf(date);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ERROR + INVALID_DATE.getMessage());
+        }
     }
 
     public static void validateRange(Integer parsedDate) {

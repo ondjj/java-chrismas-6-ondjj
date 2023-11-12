@@ -16,7 +16,6 @@ public class OrderItem {
 
     private OrderItem(Map<String,Integer> data) {
         this.item = data;
-        validateDrinkOrder();
     }
 
     public static OrderItem of(String date) {
@@ -43,13 +42,6 @@ public class OrderItem {
             menuCount.put(menu.getType(), menuCount.getOrDefault(menu.getType(), ZERO) + quantity);
         }
         return menuCount;
-    }
-
-    private void validateDrinkOrder() {
-        if (item.keySet().stream()
-                .allMatch(menuName -> Menu.getMenuByName(menuName).getType() == MenuType.DRINK)) {
-            throw new IllegalArgumentException("Drink menu cannot be ordered alone.");
-        }
     }
 
     public Integer totalPrice() {

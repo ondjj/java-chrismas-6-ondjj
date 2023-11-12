@@ -12,8 +12,13 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 
 public class ChristmasController {
+    private static final boolean TRUE = true;
+    private static final boolean FALSE = false;
+
     private final InputView inputView;
     private final OutputView outputView;
+
+    boolean validInput = FALSE;
 
     public ChristmasController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -21,35 +26,78 @@ public class ChristmasController {
     }
 
     public void run() {
+        validInput = FALSE;
         inputView.welcome();
-        VisitDate visitDate = inputView.readDate();
-        OrderItem orderItem = inputView.readOrder();
-        OrderItemDTO orderItemDTO = orderItem.toDTO();
-        outputView.printFreeView(visitDate.getDate());
-        outputView.printOrder(orderItemDTO);
-        beforeTotalPrice(visitDate, orderItem);
+        while (!validInput) {
+            try {
+                VisitDate visitDate = inputView.readDate();
+                outputView.printFreeView(visitDate.getDate());
+                validInput = TRUE;
+                setOrderItem(visitDate);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void setOrderItem(VisitDate visitDate) {
+        validInput = FALSE;
+        while (!validInput) {
+            try {
+                OrderItem orderItem = inputView.readOrder();
+                OrderItemDTO orderItemDTO = orderItem.toDTO();
+                outputView.printOrder(orderItemDTO);
+                beforeTotalPrice(visitDate, orderItem);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void beforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
-        outputView.printBeforePrice(orderItem.totalPrice());
-        Order order = Order.createOrder(visitDate, orderItem);
-        benefitDetails(order);
+        validInput = FALSE;
+        while (!validInput) {
+            try {
+                outputView.printBeforePrice(orderItem.totalPrice());
+                Order order = Order.createOrder(visitDate, orderItem);
+                validInput = TRUE;
+                benefitDetails(order);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void benefitDetails(Order order) {
-        EventGroup eventGroup = EventGroup.of(order);
-        EventGroupFacade eventGroupFacade = EventGroupFacade.of(eventGroup);
-        EventManager eventManager = EventManager.of(eventGroupFacade);
-        outputView.printPresent(eventManager.gift());
-        outputView.printBenefit(eventManager.getEventDetails());
-        outputView.printTotalBenefit(eventManager.totalBenefit());
-        afterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
+        validInput = FALSE;
+        while (!validInput) {
+            try {
+                EventGroup eventGroup = EventGroup.of(order);
+                EventGroupFacade eventGroupFacade = EventGroupFacade.of(eventGroup);
+                EventManager eventManager = EventManager.of(eventGroupFacade);
+                outputView.printPresent(eventManager.gift());
+                outputView.printBenefit(eventManager.getEventDetails());
+                outputView.printTotalBenefit(eventManager.totalBenefit());
+                afterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
     public void afterTotalPrice(Integer discount, Integer beforeTotalPrice) {
-        EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
-        Integer freeView = beforeTotalPrice - discount;
-        outputView.printLastOrderPrice(freeView);
-        outputView.printBadge(eventBadge.determineBadge());
+        validInput = FALSE;
+        while (!validInput) {
+            try {
+                EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
+                Integer freeView = beforeTotalPrice - discount;
+                outputView.printLastOrderPrice(freeView);
+                outputView.printBadge(eventBadge.determineBadge());
+                validInput = TRUE;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

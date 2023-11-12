@@ -3,6 +3,9 @@ package christmas.model;
 import christmas.util.enums.Badge;
 
 public class EventBadge {
+    private static final String NONE = "없음";
+    private static final Integer EVENT_RANGE = 10000;
+
     private final Integer totalPrice;
 
     private EventBadge(Integer totalPrice) {
@@ -15,13 +18,13 @@ public class EventBadge {
 
     public String determineBadge() {
         if (!isValidEvent()) {
-            return "없음";
+            return NONE;
         }
         Badge badge = Badge.getBadgeByAmount(this.totalPrice);
         return badge.getBadgeName();
     }
 
     private boolean isValidEvent() {
-        return this.totalPrice >= 10000;
+        return this.totalPrice >= EVENT_RANGE;
     }
 }
