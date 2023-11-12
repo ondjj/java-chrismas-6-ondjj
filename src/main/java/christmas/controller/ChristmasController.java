@@ -1,6 +1,10 @@
 package christmas.controller;
 
 import christmas.dto.OrderItemDTO;
+import christmas.model.EventBadge;
+import christmas.model.EventGroup;
+import christmas.model.EventManager;
+import christmas.model.Order;
 import christmas.model.OrderItem;
 import christmas.model.VisitDate;
 import christmas.view.InputView;
@@ -20,8 +24,30 @@ public class ChristmasController {
         VisitDate visitDate = inputView.readDate();
         OrderItem orderItem = inputView.readOrder();
         OrderItemDTO orderItemDTO = orderItem.toDTO();
-        outputView.printFreeView();
+        outputView.printFreeView(visitDate.getDate());
         outputView.printOrder(orderItemDTO);
+        beforeTotalPrice(visitDate, orderItem);
     }
 
+    public void beforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
+        outputView.printBeforePrice(orderItem.getTotalPrice());
+        Order order = Order.createOrder(visitDate, orderItem);
+        benefitDetails(order);
+    }
+
+    public void benefitDetails(Order order) {
+        EventGroup eventGroup = new EventGroup(order);
+        EventManager eventManager = EventManager.of(eventGroup);
+        outputView.printPresent(eventManager.gift());
+        outputView.printBenefit(eventManager.getEventDetails());
+        outputView.printTotalBenefit(eventManager.totalBenefit());
+        afterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
+    }
+
+    public void afterTotalPrice(Integer discount, Integer beforeTotalPrice) {
+        EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
+        Integer freeView = beforeTotalPrice - discount;
+        outputView.printLastOrderPrice(freeView);
+        outputView.printBadge(eventBadge.determineBadge());
+    }
 }
