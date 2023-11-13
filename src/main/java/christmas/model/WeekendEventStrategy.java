@@ -1,7 +1,6 @@
 package christmas.model;
 
-import static christmas.util.Constants.MONTH;
-import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.*;
 
 import christmas.util.EventUtils;
 import christmas.util.enums.EventType;
@@ -26,6 +25,9 @@ public class WeekendEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
+        if (!isEventDate()){
+            return ZERO;
+        }
         return WEEK_END_DISCOUNT;
     }
 
@@ -43,7 +45,7 @@ public class WeekendEventStrategy implements EventStrategy {
         if (isEventDate()) {
             return itemDiscount() * this.quantity;
         }
-        return 0;
+        return ZERO;
     }
 
     private boolean isEventDate() {

@@ -2,75 +2,77 @@ package christmas.model;
 
 import static christmas.util.Constants.ZERO;
 
-import christmas.util.enums.MenuType;
+import christmas.util.enums.EventType;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class EventGroup {
     private final Order order;
+    private final Map<EventType, EventStrategy> events;
 
-    private DdayEventStrategy ddayEvent;
-    private WeekdayEventStrategy weekdayEvent;
-    private WeekendEventStrategy weekendEvent;
-    private SpecialEventStrategy specialEvent;
-    private PresentEventStrategy presentEvent;
-
-    private EventGroup(Order order) {
+    private EventGroup(Order order, Map<EventType, EventStrategy> events) {
         this.order = order;
-        initializeEvents();
+        this.events = events;
     }
 
-    public static EventGroup of(Order order) {
-        return new EventGroup(order);
+    public static EventGroup of(Order order, Map<EventType, EventStrategy> events) {
+        return new EventGroup(order, events);
     }
 
     public Integer getOrderBeforeTotalPrice() {
         return order.getBeforeTotalPrice();
     }
 
-    public Integer actualBenefit() {
-        return totalBenefit() - presentEvent.itemDiscount();
+    public Integer expectBenefit() {
+        return totalBenefit() - presentEvent().itemDiscount();
     }
 
     public Integer totalBenefit() {
-        return Stream.of(
-                presentEvent.itemDiscount(),
-                specialEvent.itemDiscount(),
-                weekdayEvent.calculateDiscount(),
-                weekendEvent.calculateDiscount(),
-                ddayEvent.calculateDiscount()
-        ).reduce(ZERO, Integer::sum);
+        return events.values().stream()
+                .map(EventStrategy::itemDiscount)
+                .reduce(ZERO, Integer::sum);
     }
 
     public String giftContent() {
-        return presentEvent.getPresent();
+        return presentEvent().getPresent();
     }
 
     public Map<String, String> present() {
-        return presentEvent.extractEventDetails();
+        return presentEvent().extractEventDetails();
     }
 
     public Map<String, String> dDay() {
-        return ddayEvent.extractEventDetails();
+        return ddayEvent().extractEventDetails();
     }
 
     public Map<String, String> special() {
-        return specialEvent.extractEventDetails();
+        return specialEvent().extractEventDetails();
     }
 
     public Map<String, String> weekday() {
-        return weekdayEvent.extractEventDetails();
+        return weekdayEvent().extractEventDetails();
     }
 
     public Map<String, String> weekend() {
-        return weekendEvent.extractEventDetails();
+        return weekendEvent().extractEventDetails();
     }
 
-    private void initializeEvents() {
-        ddayEvent = DdayEventStrategy.of(order.getOrderDate());
-        weekdayEvent = WeekdayEventStrategy.of(order.getOrderDate(), order.findMenuCount(MenuType.DESSERT));
-        weekendEvent = WeekendEventStrategy.of(order.getOrderDate(), order.findMenuCount(MenuType.MAIN));
-        specialEvent = SpecialEventStrategy.of(order.getOrderDate());
-        presentEvent = PresentEventStrategy.of(order.getBeforeTotalPrice());
+    private PresentEventStrategy presentEvent() {
+        return (PresentEventStrategy) events.getOrDefault(EventType.PRESENT, NoneEventStrategy.getInstance());
+    }
+
+    private DdayEventStrategy ddayEvent() {
+        return (DdayEventStrategy) events.getOrDefault(EventType.D_DAY, NoneEventStrategy.getInstance());
+    }
+
+    private SpecialEventStrategy specialEvent() {
+        return (SpecialEventStrategy) events.getOrDefault(EventType.SPECIAL, NoneEventStrategy.getInstance());
+    }
+
+    private WeekdayEventStrategy weekdayEvent() {
+        return (WeekdayEventStrategy) events.getOrDefault(EventType.WEEKDAY, NoneEventStrategy.getInstance());
+    }
+
+    private WeekendEventStrategy weekendEvent() {
+        return (WeekendEventStrategy) events.getOrDefault(EventType.WEEKEND, NoneEventStrategy.getInstance());
     }
 }

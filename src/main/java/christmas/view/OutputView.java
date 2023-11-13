@@ -1,5 +1,8 @@
 package christmas.view;
 
+import static christmas.util.Constants.DASH;
+import static christmas.util.Constants.ZERO;
+
 import christmas.dto.OrderItemDTO;
 import christmas.util.Parser;
 import java.util.Map;
@@ -52,12 +55,17 @@ public class OutputView {
     }
 
     public void printTotalBenefit(final Integer totalBenefit) {
-        System.out.println(DISCOUNT_TOTAL_PRICE);
+        System.out.println(LINE + DISCOUNT_TOTAL_PRICE);
         String formattedBenefit = Parser.decimalFormatter(totalBenefit) + WON;
-        if (totalBenefit != 0) {
-            formattedBenefit = "-" + formattedBenefit;
-        }
+        formattedBenefit = getDash(totalBenefit, formattedBenefit);
         System.out.println(formattedBenefit);
+    }
+
+    private static String getDash(final Integer totalBenefit, String formattedBenefit) {
+        if (totalBenefit != ZERO) {
+            formattedBenefit = DASH + formattedBenefit;
+        }
+        return formattedBenefit;
     }
 
     public void printLastOrderPrice(final Integer freeView) {

@@ -24,10 +24,10 @@ public class SpecialEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        if (isEventDate()) {
-            return SPECIAL_DISCOUNT;
+        if (!isEventDate()) {
+            return ZERO;
         }
-        return ZERO;
+        return SPECIAL_DISCOUNT;
     }
 
     @Override

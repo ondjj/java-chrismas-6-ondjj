@@ -6,4 +6,6 @@ public class Constants {
     public final static Integer MONTH = 12;
     public final static Integer ZERO = 0;
     public final static String DASH = "-";
+    public final static String NONE = "없음";
+    public static final String LINE = "\n";
 }

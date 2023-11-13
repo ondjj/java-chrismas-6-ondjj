@@ -17,8 +17,8 @@ public class EventGroupFacade {
         return eventGroup.getOrderBeforeTotalPrice();
     }
 
-    public Integer actualBenefit() {
-        return eventGroup.actualBenefit();
+    public Integer expectBenefit() {
+        return eventGroup.expectBenefit();
     }
 
     public Integer totalBenefit() {

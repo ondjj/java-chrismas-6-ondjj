@@ -1,15 +1,25 @@
 package christmas.controller;
 
 import christmas.dto.OrderItemDTO;
+import christmas.model.DdayEventStrategy;
 import christmas.model.EventBadge;
 import christmas.model.EventGroup;
 import christmas.model.EventGroupFacade;
 import christmas.model.EventManager;
+import christmas.model.EventStrategy;
 import christmas.model.Order;
 import christmas.model.OrderItem;
+import christmas.model.PresentEventStrategy;
+import christmas.model.SpecialEventStrategy;
 import christmas.model.VisitDate;
+import christmas.model.WeekdayEventStrategy;
+import christmas.model.WeekendEventStrategy;
+import christmas.util.enums.EventType;
+import christmas.util.enums.MenuType;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChristmasController {
     private static final boolean TRUE = true;
@@ -47,6 +57,7 @@ public class ChristmasController {
                 OrderItem orderItem = inputView.readOrder();
                 OrderItemDTO orderItemDTO = orderItem.toDTO();
                 outputView.printOrder(orderItemDTO);
+                validInput = TRUE;
                 beforeTotalPrice(visitDate, orderItem);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
@@ -61,9 +72,10 @@ public class ChristmasController {
     }
 
     public void benefitDetails(Order order) {
-        EventGroup eventGroup = EventGroup.of(order);
+        EventGroup eventGroup = initializeEvents(order);
         EventGroupFacade eventGroupFacade = EventGroupFacade.of(eventGroup);
         EventManager eventManager = EventManager.of(eventGroupFacade);
+
         outputView.printPresent(eventManager.gift());
         outputView.printBenefit(eventManager.getEventDetails());
         outputView.printTotalBenefit(eventManager.totalBenefit());
@@ -73,7 +85,21 @@ public class ChristmasController {
     public void afterTotalPrice(Integer discount, Integer beforeTotalPrice) {
         EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
         Integer freeView = beforeTotalPrice - discount;
+
         outputView.printLastOrderPrice(freeView);
         outputView.printBadge(eventBadge.determineBadge());
+    }
+
+    private EventGroup initializeEvents(Order order) {
+        Map<EventType, EventStrategy> events = new HashMap<>();
+
+        events.put(EventType.PRESENT, PresentEventStrategy.of(order.getBeforeTotalPrice()));
+        events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate()));
+        events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
+                order.findMenuCount(MenuType.DESSERT)));
+        events.put(EventType.WEEKEND, WeekendEventStrategy.of(order.getOrderDate(),
+                order.findMenuCount(MenuType.MAIN)));
+        events.put(EventType.SPECIAL, SpecialEventStrategy.of(order.getOrderDate()));
+        return EventGroup.of(order, events);
     }
 }

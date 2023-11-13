@@ -1,12 +1,12 @@
 package christmas.model;
 
+import static christmas.util.Constants.*;
+
 import java.util.Map;
 
 public class EventManager {
     private static final Integer EVENT_RANGE = 10000;
-    private static final String NONE = "없음";
     private static final String WON = "원";
-    private static final String LINE = "\n";
     private static final String COLON = ": ";
 
     private final EventGroupFacade eventGroupFacade;
@@ -33,7 +33,7 @@ public class EventManager {
     }
 
     public Integer actualBenefit() {
-        return eventGroupFacade.actualBenefit();
+        return eventGroupFacade.expectBenefit();
     }
 
     public Integer totalBenefit() {

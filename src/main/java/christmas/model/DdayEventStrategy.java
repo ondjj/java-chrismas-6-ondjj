@@ -28,7 +28,10 @@ public class DdayEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        return calculateDiscount();
+        if (!isEventDate()) {
+            return ZERO;
+        }
+        return getDiscount();
     }
 
     @Override
@@ -49,13 +52,6 @@ public class DdayEventStrategy implements EventStrategy {
     private Map<String, String> getDetailEvent(final Map<String, String> details) {
         details.put(getEventType().getDescription(), DASH + Parser.decimalFormatter(itemDiscount()));
         return details;
-    }
-
-    public int calculateDiscount() {
-        if (isEventDate()) {
-            return getDiscount();
-        }
-        return ZERO;
     }
 
     private int getDiscount() {

@@ -1,9 +1,10 @@
 package christmas.model;
 
+import static christmas.util.Constants.NONE;
+
 import christmas.util.enums.Badge;
 
 public class EventBadge {
-    private static final String NONE = "없음";
     private static final Integer EVENT_RANGE = 10000;
 
     private final Integer totalPrice;

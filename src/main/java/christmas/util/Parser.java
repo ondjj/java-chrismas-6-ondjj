@@ -1,6 +1,7 @@
 package christmas.util;
 
 import static christmas.util.Constants.ERROR;
+import static christmas.util.Constants.ZERO;
 
 import christmas.util.enums.ErrorMessage;
 import java.text.DecimalFormat;
@@ -37,7 +38,7 @@ public class Parser {
     }
 
     private static void validUnique(final Map<String, Integer> uniqueData, final List<String> parseDash) {
-        if (uniqueData.containsKey(parseDash.get(0))) {
+        if (uniqueData.containsKey(parseDash.get(ZERO))) {
             throw new IllegalStateException(ERROR + ErrorMessage.INVALID_ORDER);
         }
     }
