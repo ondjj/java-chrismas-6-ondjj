@@ -22,7 +22,7 @@ public class EventManager {
     public StringBuilder getEventDetails() {
         StringBuilder eventDetails = new StringBuilder();
         if (!isEventRange()) {
-            return eventDetails.append(NONE);
+            return eventDetails.append(NONE + LINE);
         }
         addEventDetails(eventDetails, eventGroupFacade.dDay());
         addEventDetails(eventDetails, eventGroupFacade.weekday());
