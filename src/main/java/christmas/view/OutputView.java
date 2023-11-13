@@ -55,7 +55,7 @@ public class OutputView {
     }
 
     public void printTotalBenefit(final Integer totalBenefit) {
-        System.out.println(LINE + DISCOUNT_TOTAL_PRICE);
+        System.out.println(DISCOUNT_TOTAL_PRICE);
         String formattedBenefit = Parser.decimalFormatter(totalBenefit) + WON;
         formattedBenefit = getDash(totalBenefit, formattedBenefit);
         System.out.println(formattedBenefit);
