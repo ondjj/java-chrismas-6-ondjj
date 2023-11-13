@@ -9,6 +9,6 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         ChristmasController christmasController = new ChristmasController(inputView, outputView);
-        christmasController.run();
+        christmasController.startOrderingProcess();
     }
 }

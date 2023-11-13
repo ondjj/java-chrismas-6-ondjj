@@ -35,7 +35,7 @@ public class ChristmasController {
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void startOrderingProcess() {
         validInput = FALSE;
         inputView.welcome();
         while (!validInput) {
@@ -43,14 +43,14 @@ public class ChristmasController {
                 VisitDate visitDate = inputView.readDate();
                 outputView.printFreeView(visitDate.getDate());
                 validInput = TRUE;
-                setOrderItem(visitDate);
+                processOrderItemInput(visitDate);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public void setOrderItem(VisitDate visitDate) {
+    public void processOrderItemInput(VisitDate visitDate) {
         validInput = FALSE;
         while (!validInput) {
             try {
@@ -58,14 +58,14 @@ public class ChristmasController {
                 OrderItemDTO orderItemDTO = orderItem.toDTO();
                 outputView.printOrder(orderItemDTO);
                 validInput = TRUE;
-                beforeTotalPrice(visitDate, orderItem);
+                displayBeforeTotalPrice(visitDate, orderItem);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public void beforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
+    public void displayBeforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
         outputView.printBeforePrice(orderItem.totalPrice());
         Order order = Order.createOrder(visitDate, orderItem);
         benefitDetails(order);
@@ -79,10 +79,10 @@ public class ChristmasController {
         outputView.printPresent(eventManager.gift());
         outputView.printBenefit(eventManager.getEventDetails());
         outputView.printTotalBenefit(eventManager.totalBenefit());
-        afterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
+        displayAfterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
     }
 
-    public void afterTotalPrice(Integer discount, Integer beforeTotalPrice) {
+    public void displayAfterTotalPrice(Integer discount, Integer beforeTotalPrice) {
         EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
         Integer freeView = beforeTotalPrice - discount;
 
