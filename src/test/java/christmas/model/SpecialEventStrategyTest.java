@@ -6,21 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class SpecialEventTestStrategy {
-    private Integer sunday;
-    private Integer christmas;
-    private Integer weekday;
-    private Integer price;
+class SpecialEventStrategyTest {
     private EventStrategy specialEventStrategy;
     private EventStrategy christmasSpecialEventStrategy;
     private EventStrategy weekdaySpecialEventStrategy;
 
     @BeforeEach
     void setUp() {
-        sunday = 24;
-        christmas = 25;
-        weekday = 26;
-        price = 15000;
+        Integer sunday = 24;
+        Integer christmas = 25;
+        Integer weekday = 26;
         specialEventStrategy = SpecialEventStrategy.of(sunday);
         christmasSpecialEventStrategy = SpecialEventStrategy.of(christmas);
         weekdaySpecialEventStrategy = SpecialEventStrategy.of(weekday);

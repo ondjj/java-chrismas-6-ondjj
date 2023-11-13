@@ -27,7 +27,7 @@ class VisitDateTest {
         Throwable throwable = catchThrowable(() -> VisitDate.of("a"));
 
         assertThat(throwable)
-               .isInstanceOf(NumberFormatException.class);
+               .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("범위를 벗어난 입력 값 테스트")

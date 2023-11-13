@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-class DdayEventTestStrategy {
+class DdayEventStrategyTest {
 
     private Integer startDay;
     private Integer endDay;
@@ -24,14 +24,14 @@ class DdayEventTestStrategy {
 
     @Test
     void 생성_테스트() {
-        ddayEventStrategy = DdayEventStrategy.of(startDay, price);
+        ddayEventStrategy = DdayEventStrategy.of(startDay);
         assertThat(ddayEventStrategy).isNotNull();
     }
 
     @Test
     void 할인_테스트() {
-        ddayEventStrategy = DdayEventStrategy.of(startDay, price);
-        endDayEventStrategy = DdayEventStrategy.of(endDay, price);
+        ddayEventStrategy = DdayEventStrategy.of(startDay);
+        endDayEventStrategy = DdayEventStrategy.of(endDay);
 
         assertThat(ddayEventStrategy.itemDiscount()).isEqualTo(1000);
         assertThat(endDayEventStrategy.itemDiscount()).isEqualTo(3400);
@@ -40,9 +40,9 @@ class DdayEventTestStrategy {
     @DisplayName("D-Day에 따라 할인이 적용됩니다.")
     @Test
     void 이벤트_기간_테스트() {
-        ddayEventStrategy = DdayEventStrategy.of(startDay, price);
-        endDayEventStrategy = DdayEventStrategy.of(endDay, price);
-        EventStrategy overDayEventStrategy = DdayEventStrategy.of(endDay + 1, price);
+        ddayEventStrategy = DdayEventStrategy.of(startDay);
+        endDayEventStrategy = DdayEventStrategy.of(endDay);
+        EventStrategy overDayEventStrategy = DdayEventStrategy.of(endDay + 1);
 
         assertThat(ddayEventStrategy.itemDiscount()).isEqualTo(1000);
         assertThat(endDayEventStrategy.itemDiscount()).isEqualTo(3400);

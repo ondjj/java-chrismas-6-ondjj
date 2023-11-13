@@ -6,11 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class WeekdayEventTestStrategy {
-    private Integer monday;
-    private Integer friday;
-    private Integer saturday;
-    private Integer sunday;
+class WeekdayEventStrategyTest {
 
     WeekdayEventStrategy weekdayMonday;
     WeekdayEventStrategy weekdayFriday;
@@ -19,15 +15,16 @@ class WeekdayEventTestStrategy {
 
     @BeforeEach
     void setUp() {
-        monday = 25;
-        friday = 22;
-        saturday = 23;
-        sunday = 24;
+        Integer monday = 25;
+        Integer friday = 22;
+        Integer saturday = 23;
+        Integer sunday = 24;
+        Integer quantity = 3;
 
-        weekdayMonday = WeekdayEventStrategy.of(monday);
-        weekdayFriday = WeekdayEventStrategy.of(friday);
-        weekdaySaturday = WeekdayEventStrategy.of(saturday);
-        weekdaySunday = WeekdayEventStrategy.of(sunday);
+        weekdayMonday = WeekdayEventStrategy.of(monday, quantity);
+        weekdayFriday = WeekdayEventStrategy.of(friday, quantity);
+        weekdaySaturday = WeekdayEventStrategy.of(saturday, quantity);
+        weekdaySunday = WeekdayEventStrategy.of(sunday, quantity);
     }
 
     @Test
