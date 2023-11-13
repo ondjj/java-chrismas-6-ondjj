@@ -27,7 +27,7 @@ public class WeekdayEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        if (isEventDate()) {
+        if (!isEventDate()) {
             return ZERO;
         }
         return WEEK_DAY_DISCOUNT;
