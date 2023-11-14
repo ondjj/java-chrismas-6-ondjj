@@ -21,6 +21,11 @@ public class NoneEventStrategy implements EventStrategy {
     }
 
     @Override
+    public Map<String, String> createEventDetails(final EventType eventType, final Integer discount) {
+        return null;
+    }
+
+    @Override
     public Map<String, String> extractEventDetails() {
         return null;
     }
