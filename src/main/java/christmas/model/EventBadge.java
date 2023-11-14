@@ -5,12 +5,12 @@ import static christmas.util.Constants.NONE;
 import christmas.util.enums.Badge;
 
 public class EventBadge {
-    private static final Integer EVENT_RANGE = 10000;
+    private static final Integer EVENT_RANGE = 5000;
 
-    private final Integer totalPrice;
+    private final Integer actualBenefit;
 
-    private EventBadge(Integer totalPrice) {
-        this.totalPrice = totalPrice;
+    private EventBadge(Integer actualBenefit) {
+        this.actualBenefit = actualBenefit;
     }
 
     public static EventBadge of(Integer totalPrice) {
@@ -21,11 +21,11 @@ public class EventBadge {
         if (!isValidEvent()) {
             return NONE;
         }
-        Badge badge = Badge.getBadgeByAmount(this.totalPrice);
+        Badge badge = Badge.getBadgeByAmount(this.actualBenefit);
         return badge.getBadgeName();
     }
 
     private boolean isValidEvent() {
-        return this.totalPrice >= EVENT_RANGE;
+        return this.actualBenefit >= EVENT_RANGE;
     }
 }

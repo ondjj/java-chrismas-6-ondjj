@@ -79,12 +79,12 @@ public class ChristmasController {
         outputView.printPresent(eventManager.gift());
         outputView.printBenefit(eventManager.getEventDetails());
         outputView.printTotalBenefit(eventManager.totalBenefit());
-        displayAfterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice());
+        displayAfterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice(), eventManager.totalBenefit());
     }
 
-    public void displayAfterTotalPrice(Integer discount, Integer beforeTotalPrice) {
-        EventBadge eventBadge = EventBadge.of(beforeTotalPrice);
-        Integer freeView = beforeTotalPrice - discount;
+    public void displayAfterTotalPrice(Integer actualBenefit, Integer beforeTotalPrice, Integer totalBenefit) {
+        EventBadge eventBadge = EventBadge.of(totalBenefit);
+        Integer freeView = beforeTotalPrice - actualBenefit;
 
         outputView.printLastOrderPrice(freeView);
         outputView.printBadge(eventBadge.determineBadge());
