@@ -1,6 +1,7 @@
 package christmas.model;
 
 import christmas.util.enums.EventType;
+import java.util.HashMap;
 import java.util.Map;
 
 public class NoneEventStrategy implements EventStrategy {
@@ -12,22 +13,26 @@ public class NoneEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        return null;
+        return 0;
     }
 
     @Override
     public EventType getEventType() {
-        return null;
+        return EventType.NONE;
     }
 
     @Override
     public Map<String, String> createEventDetails(final EventType eventType, final Integer discount) {
-        return null;
+        Map<String, String> noneEvent = new HashMap<>();
+        noneEvent.put("없음", "없음");
+        return noneEvent;
     }
 
     @Override
     public Map<String, String> extractEventDetails() {
-        return null;
+        Map<String, String> noneEvent = new HashMap<>();
+        noneEvent.put("없음", "없음");
+        return noneEvent;
     }
 
     public static NoneEventStrategy getInstance() {
