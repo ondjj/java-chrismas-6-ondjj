@@ -1,6 +1,7 @@
 package christmas.util.enums;
 
 public enum EventType {
+    NONE("없음", "없음"),
     D_DAY("크리스마스 디데이 할인", "없음"),
     PRESENT("증정 이벤트", "샴페인 1개", "없음"),
     SPECIAL("특별 할인", "없음"),
