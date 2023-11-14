@@ -2,6 +2,13 @@ package christmas.model;
 
 import static christmas.util.Constants.ZERO;
 
+import christmas.model.event.DdayEventStrategy;
+import christmas.model.event.EventStrategy;
+import christmas.model.event.NoneEventStrategy;
+import christmas.model.event.PresentEventStrategy;
+import christmas.model.event.SpecialEventStrategy;
+import christmas.model.event.WeekdayEventStrategy;
+import christmas.model.event.WeekendEventStrategy;
 import christmas.util.enums.EventType;
 import java.util.Map;
 

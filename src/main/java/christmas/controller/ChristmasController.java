@@ -1,19 +1,19 @@
 package christmas.controller;
 
 import christmas.dto.OrderItemDTO;
-import christmas.model.DdayEventStrategy;
+import christmas.model.event.DdayEventStrategy;
 import christmas.model.EventBadge;
 import christmas.model.EventGroup;
 import christmas.model.EventGroupFacade;
 import christmas.model.EventManager;
-import christmas.model.EventStrategy;
+import christmas.model.event.EventStrategy;
 import christmas.model.Order;
 import christmas.model.OrderItem;
-import christmas.model.PresentEventStrategy;
-import christmas.model.SpecialEventStrategy;
+import christmas.model.event.PresentEventStrategy;
+import christmas.model.event.SpecialEventStrategy;
 import christmas.model.VisitDate;
-import christmas.model.WeekdayEventStrategy;
-import christmas.model.WeekendEventStrategy;
+import christmas.model.event.WeekdayEventStrategy;
+import christmas.model.event.WeekendEventStrategy;
 import christmas.util.enums.EventType;
 import christmas.util.enums.MenuType;
 import christmas.view.InputView;

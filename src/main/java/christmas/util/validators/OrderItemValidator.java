@@ -1,6 +1,5 @@
 package christmas.util.validators;
 
-
 import christmas.util.enums.Menu;
 import christmas.util.enums.MenuType;
 import christmas.util.exception.IllegalArgumentExceptionType;
@@ -29,7 +28,7 @@ public class OrderItemValidator {
 
     private static void containsValidMenuItems(Map<String, Integer> parseData) {
         for (Map.Entry<String, Integer> entry : parseData.entrySet()) {
-            if (!Menu.isValidMenu(entry.getKey())){
+            if (!Menu.isValidMenu(entry.getKey())) {
                 throw IllegalStateExceptionType.DUPLICATION_MENU_NAME.getException();
             }
         }

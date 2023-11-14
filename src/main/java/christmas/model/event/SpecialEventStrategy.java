@@ -1,15 +1,14 @@
-package christmas.model;
+package christmas.model.event;
 
 import static christmas.util.Constants.*;
 
-import christmas.util.Parser;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SpecialEventStrategy implements EventStrategy {
+public class SpecialEventStrategy extends EventDetailsHandler implements EventStrategy {
     private static final int SPECIAL_DISCOUNT = 1000;
     private static final int CHRISTMAS = 25;
 
@@ -52,19 +51,6 @@ public class SpecialEventStrategy implements EventStrategy {
         }
         putNone(eventType, details);
         return details;
-    }
-
-    private void putNone(final EventType eventType, final Map<String, String> details) {
-        details.put(eventType.getNone(), eventType.getNone());
-    }
-
-    private void putDetails(final EventType eventType, final Integer discount,
-                            final Map<String, String> details) {
-        details.put(eventType.getDescription(), DASH + Parser.decimalFormatter(discount));
-    }
-
-    private boolean isValid(final Integer discount) {
-        return discount > ZERO;
     }
 
     private boolean isEventDate() {

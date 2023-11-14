@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.event;
 
 
 import christmas.util.enums.EventType;

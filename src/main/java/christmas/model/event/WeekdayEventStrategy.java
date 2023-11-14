@@ -1,18 +1,14 @@
-package christmas.model;
+package christmas.model.event;
 
-import static christmas.util.Constants.DASH;
-import static christmas.util.Constants.MONTH;
-import static christmas.util.Constants.YEAR;
-import static christmas.util.Constants.ZERO;
+import static christmas.util.Constants.*;
 
-import christmas.util.Parser;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class WeekdayEventStrategy implements EventStrategy {
+public class WeekdayEventStrategy extends EventDetailsHandler implements EventStrategy {
     private static final int WEEK_DAY_DISCOUNT = 2023;
 
     private final LocalDate date;
@@ -58,19 +54,6 @@ public class WeekdayEventStrategy implements EventStrategy {
 
     private int calculateDiscount() {
         return WEEK_DAY_DISCOUNT * this.quantity;
-    }
-
-    private boolean isValid(final Integer discount) {
-        return discount > ZERO;
-    }
-
-    private void putNone(final EventType eventType, final Map<String, String> details) {
-        details.put(eventType.getNone(), eventType.getNone());
-    }
-
-    private void putDetails(final EventType eventType, final Integer discount,
-                            final Map<String, String> details) {
-        details.put(eventType.getDescription(), DASH + Parser.decimalFormatter(discount));
     }
 
     private boolean isEventDate() {

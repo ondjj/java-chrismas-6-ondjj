@@ -2,6 +2,8 @@ package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.model.event.EventStrategy;
+import christmas.model.event.SpecialEventStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,18 +1,13 @@
-package christmas.model;
+package christmas.model.event;
 
-import static christmas.util.Constants.DASH;
-import static christmas.util.Constants.LIMIT_RANGE;
-import static christmas.util.Constants.MONTH;
-import static christmas.util.Constants.YEAR;
-import static christmas.util.Constants.ZERO;
+import static christmas.util.Constants.*;
 
-import christmas.util.Parser;
 import christmas.util.enums.EventType;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DdayEventStrategy implements EventStrategy {
+public class DdayEventStrategy extends EventDetailsHandler implements EventStrategy {
     private static final int D_DAY_DISCOUNT = 900;
     private static final int CHRISTMAS = 25;
     private static final int INCREMENT = 100;
@@ -61,19 +56,6 @@ public class DdayEventStrategy implements EventStrategy {
         }
         putNone(eventType, details);
         return details;
-    }
-
-    private boolean isValid(final Integer discount) {
-        return discount > ZERO;
-    }
-
-    private void putNone(final EventType eventType, final Map<String, String> details) {
-        details.put(eventType.getNone(), eventType.getNone());
-    }
-
-    private void putDetails(final EventType eventType, final Integer discount,
-                            final Map<String, String> details) {
-        details.put(eventType.getDescription(), DASH + Parser.decimalFormatter(discount));
     }
 
     private int calculateDiscount() {
