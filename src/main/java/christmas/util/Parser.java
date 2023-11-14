@@ -1,9 +1,8 @@
 package christmas.util;
 
-import static christmas.util.Constants.ERROR;
 import static christmas.util.Constants.ZERO;
 
-import christmas.util.enums.ErrorMessage;
+import christmas.util.exception.IllegalStateExceptionType;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -15,6 +14,7 @@ public class Parser {
     private static final String SPLIT_REGEX_DASH = "-";
     private static final Integer DEFAULT_KEY_INDEX = 0;
     private static final Integer DEFAULT_VALUE_INDEX = 1;
+    private static final String PATTERN = "#,###";
 
     public static Map<String, Integer> parseString(String orderItem) {
         List<String> parseComa = Arrays.asList(orderItem.split(SPLIT_REGEX_COMMA));
@@ -22,7 +22,7 @@ public class Parser {
     }
 
     public static String decimalFormatter(Integer won) {
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        DecimalFormat decimalFormat = new DecimalFormat(PATTERN);
         return decimalFormat.format(won);
     }
 
@@ -39,7 +39,7 @@ public class Parser {
 
     private static void validUnique(final Map<String, Integer> uniqueData, final List<String> parseDash) {
         if (uniqueData.containsKey(parseDash.get(ZERO))) {
-            throw new IllegalStateException(ERROR + ErrorMessage.INVALID_ORDER);
+            throw IllegalStateExceptionType.DUPLICATION_MENU_NAME.getException();
         }
     }
 }

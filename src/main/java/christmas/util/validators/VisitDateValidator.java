@@ -1,20 +1,20 @@
 package christmas.util.validators;
 
-import static christmas.util.Constants.ERROR;
-import static christmas.util.enums.ErrorMessage.INVALID_DATE;
+
+import christmas.util.exception.IllegalArgumentExceptionType;
 
 public class VisitDateValidator {
     public static Integer isValidDate(String date) {
         try {
             return Integer.valueOf(date);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ERROR + INVALID_DATE.getMessage());
+            throw IllegalArgumentExceptionType.INVALID_DATE.getException();
         }
     }
 
     public static void validateRange(Integer parsedDate) {
         if (parsedDate < 1 || parsedDate > 31) {
-            throw new IllegalArgumentException(ERROR + INVALID_DATE.getMessage());
+            throw IllegalArgumentExceptionType.INVALID_DATE.getException();
         }
     }
 }

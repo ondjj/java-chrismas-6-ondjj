@@ -66,7 +66,7 @@ public class WeekendEventStrategy implements EventStrategy {
         details.put(eventType.getDescription(), DASH + Parser.decimalFormatter(discount));
     }
 
-    public int calculateDiscount() {
+    private int calculateDiscount() {
         if (isEventDate()) {
             return itemDiscount() * this.quantity;
         }

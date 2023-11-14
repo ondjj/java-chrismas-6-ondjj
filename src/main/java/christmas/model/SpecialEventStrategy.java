@@ -2,7 +2,6 @@ package christmas.model;
 
 import static christmas.util.Constants.*;
 
-import christmas.util.EventUtils;
 import christmas.util.Parser;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
