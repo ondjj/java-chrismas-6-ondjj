@@ -20,12 +20,9 @@ class EventGroupTest {
         VisitDate visitDate = VisitDate.of("3");
         OrderItem orderItem = OrderItem.of("타파스-1,제로콜라-1");
         order = Order.createOrder(visitDate, orderItem);
-        eventGroup = initializeEvents(order);
-    }
+        events = new HashMap<>();
 
-    private EventGroup initializeEvents(Order order) {
-        Map<EventType, EventStrategy> events = new HashMap<>();
-
+        events.put(EventType.NONE, NoneEventStrategy.getInstance());
         events.put(EventType.PRESENT, PresentEventStrategy.of(order.getBeforeTotalPrice()));
         events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
         events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
@@ -33,7 +30,7 @@ class EventGroupTest {
         events.put(EventType.WEEKEND, WeekendEventStrategy.of(order.getOrderDate(),
                 order.findMenuCount(MenuType.MAIN)));
         events.put(EventType.SPECIAL, SpecialEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
-        return EventGroup.of(order, events);
+        eventGroup = EventGroup.of(order, events);
     }
 
     @Test
@@ -44,5 +41,15 @@ class EventGroupTest {
     @Test
     void 총_혜택_금액_테스트() {
         assertThat(eventGroup.totalBenefit()).isEqualTo(0);
+    }
+
+    @Test
+    void 예상_혜택_금액_테스트() {
+        assertThat(eventGroup.expectBenefit()).isEqualTo(0);
+    }
+
+    @Test
+    void 증정_여부_테스트() {
+        assertThat(eventGroup.giftContent()).isEqualTo("없음");
     }
 }
