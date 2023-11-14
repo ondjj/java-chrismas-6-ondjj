@@ -14,21 +14,23 @@ public class SpecialEventStrategy implements EventStrategy {
     private static final int CHRISTMAS = 25;
 
     private final LocalDate date;
+    private final Integer totalPrice;
 
-    private SpecialEventStrategy(final Integer day) {
+    private SpecialEventStrategy(final Integer day, final Integer totalPrice) {
         this.date = LocalDate.of(YEAR, MONTH, day);
+        this.totalPrice = totalPrice;
     }
 
-    public static SpecialEventStrategy of(final Integer day) {
-        return new SpecialEventStrategy(day);
+    public static SpecialEventStrategy of(final Integer day, final Integer totalPrice) {
+        return new SpecialEventStrategy(day, totalPrice);
     }
 
     @Override
     public Integer itemDiscount() {
-        if (!isEventDate()) {
-            return ZERO;
+        if (isEventDate()) {
+            return SPECIAL_DISCOUNT;
         }
-        return SPECIAL_DISCOUNT;
+        return ZERO;
     }
 
     @Override
@@ -67,6 +69,6 @@ public class SpecialEventStrategy implements EventStrategy {
 
     private boolean isEventDate() {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return (dayOfWeek == DayOfWeek.SUNDAY) || (date.getDayOfMonth() == CHRISTMAS);
+        return totalPrice >= LIMIT_RANGE && (dayOfWeek == DayOfWeek.SUNDAY) || (date.getDayOfMonth() == CHRISTMAS);
     }
 }

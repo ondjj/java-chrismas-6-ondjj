@@ -16,9 +16,9 @@ class SpecialEventStrategyTest {
         Integer sunday = 24;
         Integer christmas = 25;
         Integer weekday = 26;
-        specialEventStrategy = SpecialEventStrategy.of(sunday);
-        christmasSpecialEventStrategy = SpecialEventStrategy.of(christmas);
-        weekdaySpecialEventStrategy = SpecialEventStrategy.of(weekday);
+        specialEventStrategy = SpecialEventStrategy.of(sunday, 10000);
+        christmasSpecialEventStrategy = SpecialEventStrategy.of(christmas, 10000);
+        weekdaySpecialEventStrategy = SpecialEventStrategy.of(weekday, 10000);
     }
 
     @Test

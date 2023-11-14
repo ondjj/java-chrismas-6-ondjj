@@ -19,7 +19,7 @@ class WeekendEventStrategyTest {
         Integer friday = 22;
         Integer saturday = 23;
         Integer sunday = 24;
-        Integer quantity = 5;
+        Integer quantity = 2;
 
         weekendMonday = WeekendEventStrategy.of(monday, quantity);
         weekendFriday = WeekendEventStrategy.of(friday, quantity);
@@ -38,8 +38,8 @@ class WeekendEventStrategyTest {
     @Test
     void itemDiscount() {
         assertThat(weekendMonday.itemDiscount()).isEqualTo(0);
-        assertThat(weekendFriday.itemDiscount()).isEqualTo(2023);
-        assertThat(weekendSaturday.itemDiscount()).isEqualTo(2023);
+        assertThat(weekendFriday.itemDiscount()).isEqualTo(4046);
+        assertThat(weekendSaturday.itemDiscount()).isEqualTo(4046);
         assertThat(weekendSunday.itemDiscount()).isEqualTo(0);
     }
 }

@@ -94,12 +94,12 @@ public class ChristmasController {
         Map<EventType, EventStrategy> events = new HashMap<>();
 
         events.put(EventType.PRESENT, PresentEventStrategy.of(order.getBeforeTotalPrice()));
-        events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate()));
+        events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
         events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
                 order.findMenuCount(MenuType.DESSERT)));
         events.put(EventType.WEEKEND, WeekendEventStrategy.of(order.getOrderDate(),
                 order.findMenuCount(MenuType.MAIN)));
-        events.put(EventType.SPECIAL, SpecialEventStrategy.of(order.getOrderDate()));
+        events.put(EventType.SPECIAL, SpecialEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
         return EventGroup.of(order, events);
     }
 }

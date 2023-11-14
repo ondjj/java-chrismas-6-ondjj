@@ -1,6 +1,7 @@
 package christmas.model;
 
 import static christmas.util.Constants.DASH;
+import static christmas.util.Constants.LIMIT_RANGE;
 import static christmas.util.Constants.MONTH;
 import static christmas.util.Constants.YEAR;
 import static christmas.util.Constants.ZERO;
@@ -17,21 +18,23 @@ public class DdayEventStrategy implements EventStrategy {
     private static final int INCREMENT = 100;
 
     private final LocalDate date;
+    private final Integer totalPrice;
 
-    private DdayEventStrategy(final Integer day) {
+    private DdayEventStrategy(final Integer day, final Integer totalPrice) {
         this.date = LocalDate.of(YEAR, MONTH, day);
+        this.totalPrice = totalPrice;
     }
 
-    public static DdayEventStrategy of(final Integer day) {
-        return new DdayEventStrategy(day);
+    public static DdayEventStrategy of(final Integer day, final Integer totalPrice) {
+        return new DdayEventStrategy(day, totalPrice);
     }
 
     @Override
     public Integer itemDiscount() {
-        if (!isEventDate()) {
-            return ZERO;
+        if (isEventDate()) {
+            return calculateDiscount();
         }
-        return getDiscount();
+        return ZERO;
     }
 
     @Override
@@ -73,11 +76,11 @@ public class DdayEventStrategy implements EventStrategy {
         details.put(eventType.getDescription(), DASH + Parser.decimalFormatter(discount));
     }
 
-    private int getDiscount() {
+    private int calculateDiscount() {
         return D_DAY_DISCOUNT + (date.getDayOfMonth() * INCREMENT);
     }
 
     private boolean isEventDate() {
-        return date.getDayOfMonth() <= CHRISTMAS;
+        return totalPrice >= LIMIT_RANGE && date.getDayOfMonth() <= CHRISTMAS;
     }
 }

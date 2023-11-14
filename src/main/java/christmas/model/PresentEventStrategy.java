@@ -24,10 +24,10 @@ public class PresentEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        if (!isPresentRange()) {
-            return ZERO;
+        if (isPresentRange()) {
+            return PRESENT_DISCOUNT;
         }
-        return PRESENT_DISCOUNT;
+        return ZERO;
     }
 
     @Override

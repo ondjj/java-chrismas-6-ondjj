@@ -26,10 +26,10 @@ public class WeekendEventStrategy implements EventStrategy {
 
     @Override
     public Integer itemDiscount() {
-        if (!isEventDate()) {
-            return ZERO;
+        if (isEventDate()) {
+            return calculateDiscount();
         }
-        return WEEK_END_DISCOUNT;
+        return ZERO;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class WeekendEventStrategy implements EventStrategy {
 
     @Override
     public Map<String, String> extractEventDetails() {
-        return createEventDetails(getEventType(), calculateDiscount());
+        return createEventDetails(getEventType(), itemDiscount());
     }
 
     @Override
@@ -67,10 +67,7 @@ public class WeekendEventStrategy implements EventStrategy {
     }
 
     private int calculateDiscount() {
-        if (isEventDate()) {
-            return itemDiscount() * this.quantity;
-        }
-        return ZERO;
+        return WEEK_END_DISCOUNT * this.quantity;
     }
 
     private boolean isEventDate() {

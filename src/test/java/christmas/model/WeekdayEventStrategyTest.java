@@ -38,9 +38,9 @@ class WeekdayEventStrategyTest {
     @DisplayName("일-월(평일) 할인 적용, 금-토(주말) 할인 적용")
     @Test
     void itemDiscount() {
-        assertThat(weekdayMonday.itemDiscount()).isEqualTo(2023);
+        assertThat(weekdayMonday.itemDiscount()).isEqualTo(6069);
         assertThat(weekdayFriday.itemDiscount()).isEqualTo(0);
         assertThat(weekdaySaturday.itemDiscount()).isEqualTo(0);
-        assertThat(weekdaySunday.itemDiscount()).isEqualTo(2023);
+        assertThat(weekdaySunday.itemDiscount()).isEqualTo(6069);
     }
 }
