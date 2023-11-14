@@ -18,9 +18,9 @@ public class OrderItem {
         this.item = data;
     }
 
-    public static OrderItem of(String date) {
-        validFormat(date);
-        Map<String, Integer> parseData = Parser.parseString(date);
+    public static OrderItem of(String item) {
+        validFormat(item);
+        Map<String, Integer> parseData = Parser.parseString(item);
         validateOrderData(parseData);
         return new OrderItem(parseData);
     }
