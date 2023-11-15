@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.model.event.PresentEventStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +15,8 @@ class PresentEventStrategyTest {
     void setUp() {
         Integer underPrice = 11999;
         Integer overPrice = 120000;
-        underPresentEvent = PresentEventStrategy.of(underPrice);
-        overPresentEvent = PresentEventStrategy.of(overPrice);
+        underPresentEvent = PresentEventStrategy.from(underPrice);
+        overPresentEvent = PresentEventStrategy.from(overPrice);
     }
 
     @Test

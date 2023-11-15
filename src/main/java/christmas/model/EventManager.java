@@ -1,11 +1,12 @@
 package christmas.model;
 
-import static christmas.util.Constants.*;
+import static christmas.util.Constants.LINE;
+import static christmas.util.Constants.NONE;
 
 import java.util.Map;
 
 public class EventManager {
-    private static final Integer EVENT_RANGE = 10000;
+    private static final Integer EVENT_RANGE = 10_000;
     private static final String WON = "원";
     private static final String COLON = ": ";
 

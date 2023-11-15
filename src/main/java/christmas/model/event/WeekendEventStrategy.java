@@ -1,6 +1,8 @@
 package christmas.model.event;
 
-import static christmas.util.Constants.*;
+import static christmas.util.Constants.MONTH;
+import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
@@ -9,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WeekendEventStrategy extends EventDetailsHandler implements EventStrategy {
-    private static final int WEEK_END_DISCOUNT = 2023;
+    private static final int WEEK_END_DISCOUNT = 2_023;
 
     private final LocalDate date;
     private final Integer quantity;

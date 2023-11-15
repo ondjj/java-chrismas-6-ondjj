@@ -1,6 +1,9 @@
 package christmas.model.event;
 
-import static christmas.util.Constants.*;
+import static christmas.util.Constants.LIMIT_RANGE;
+import static christmas.util.Constants.MONTH;
+import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
@@ -9,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SpecialEventStrategy extends EventDetailsHandler implements EventStrategy {
-    private static final int SPECIAL_DISCOUNT = 1000;
+    private static final int SPECIAL_DISCOUNT = 1_000;
     private static final int CHRISTMAS = 25;
 
     private final LocalDate date;
@@ -54,7 +57,15 @@ public class SpecialEventStrategy extends EventDetailsHandler implements EventSt
     }
 
     private boolean isEventDate() {
+        return isTotalPriceInRange() && isSpecialDate();
+    }
+
+    private boolean isTotalPriceInRange() {
+        return totalPrice >= LIMIT_RANGE;
+    }
+
+    private boolean isSpecialDate() {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return totalPrice >= LIMIT_RANGE && (dayOfWeek == DayOfWeek.SUNDAY) || (date.getDayOfMonth() == CHRISTMAS);
+        return dayOfWeek == DayOfWeek.SUNDAY || date.getDayOfMonth() == CHRISTMAS;
     }
 }

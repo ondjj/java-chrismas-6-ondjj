@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.model.event.DdayEventStrategy;
 import christmas.model.event.EventStrategy;
@@ -34,7 +34,7 @@ class EventManagerTest {
 
     private EventGroup initializeEvents(Order order) {
         Map<EventType, EventStrategy> events = new HashMap<>();
-        events.put(EventType.PRESENT, PresentEventStrategy.of(order.getBeforeTotalPrice()));
+        events.put(EventType.PRESENT, PresentEventStrategy.from(order.getBeforeTotalPrice()));
         events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
         events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
                 order.findMenuCount(MenuType.DESSERT)));

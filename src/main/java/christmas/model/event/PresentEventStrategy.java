@@ -7,8 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PresentEventStrategy extends EventDetailsHandler implements EventStrategy {
-    private static final int PRESENT_DISCOUNT = 25000;
-    private static final int PRESENT_RANGE = 120000;
+    private static final int PRESENT_DISCOUNT = 25_000;
+    private static final int PRESENT_RANGE = 120_000;
 
     private final Integer price;
 
@@ -16,7 +16,7 @@ public class PresentEventStrategy extends EventDetailsHandler implements EventSt
         this.price = price;
     }
 
-    public static PresentEventStrategy of(final Integer price) {
+    public static PresentEventStrategy from(final Integer price) {
         return new PresentEventStrategy(price);
     }
 

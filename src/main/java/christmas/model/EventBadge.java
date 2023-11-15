@@ -5,7 +5,7 @@ import static christmas.util.Constants.NONE;
 import christmas.util.enums.Badge;
 
 public class EventBadge {
-    private static final Integer EVENT_RANGE = 5000;
+    private static final Integer EVENT_RANGE = 5_000;
 
     private final Integer actualBenefit;
 

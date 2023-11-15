@@ -1,17 +1,17 @@
 package christmas.controller;
 
 import christmas.dto.OrderItemDTO;
-import christmas.model.event.DdayEventStrategy;
 import christmas.model.EventBadge;
 import christmas.model.EventGroup;
 import christmas.model.EventGroupFacade;
 import christmas.model.EventManager;
-import christmas.model.event.EventStrategy;
 import christmas.model.Order;
 import christmas.model.OrderItem;
+import christmas.model.VisitDate;
+import christmas.model.event.DdayEventStrategy;
+import christmas.model.event.EventStrategy;
 import christmas.model.event.PresentEventStrategy;
 import christmas.model.event.SpecialEventStrategy;
-import christmas.model.VisitDate;
 import christmas.model.event.WeekdayEventStrategy;
 import christmas.model.event.WeekendEventStrategy;
 import christmas.util.enums.EventType;
@@ -93,7 +93,7 @@ public class ChristmasController {
     private EventGroup initializeEvents(Order order) {
         Map<EventType, EventStrategy> events = new HashMap<>();
 
-        events.put(EventType.PRESENT, PresentEventStrategy.of(order.getBeforeTotalPrice()));
+        events.put(EventType.PRESENT, PresentEventStrategy.from(order.getBeforeTotalPrice()));
         events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
         events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
                 order.findMenuCount(MenuType.DESSERT)));
