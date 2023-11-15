@@ -22,13 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChristmasController {
-    private static final boolean TRUE = true;
-    private static final boolean FALSE = false;
-
     private final InputView inputView;
     private final OutputView outputView;
 
-    boolean validInput = FALSE;
+    private boolean validInput = false;
 
     public ChristmasController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -36,13 +33,13 @@ public class ChristmasController {
     }
 
     public void startOrderingProcess() {
-        validInput = FALSE;
+        validInput = false;
         inputView.welcome();
         while (!validInput) {
             try {
                 VisitDate visitDate = inputView.readDate();
                 outputView.printFreeView(visitDate.getDate());
-                validInput = TRUE;
+                validInput = true;
                 processOrderItemInput(visitDate);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
@@ -51,13 +48,13 @@ public class ChristmasController {
     }
 
     public void processOrderItemInput(VisitDate visitDate) {
-        validInput = FALSE;
+        validInput = false;
         while (!validInput) {
             try {
                 OrderItem orderItem = inputView.readOrder();
                 OrderItemDTO orderItemDTO = orderItem.toDTO();
                 outputView.printOrder(orderItemDTO);
-                validInput = TRUE;
+                validInput = true;
                 displayBeforeTotalPrice(visitDate, orderItem);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println(e.getMessage());
@@ -67,19 +64,27 @@ public class ChristmasController {
 
     public void displayBeforeTotalPrice(VisitDate visitDate, OrderItem orderItem) {
         outputView.printBeforePrice(orderItem.totalPrice());
+
         Order order = Order.createOrder(visitDate, orderItem);
         benefitDetails(order);
     }
 
     public void benefitDetails(Order order) {
+        EventManager eventManager = createEventManager(order);
+        displayGiftAndBenefits(eventManager);
+        displayAfterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice(), eventManager.totalBenefit());
+    }
+
+    private EventManager createEventManager(Order order) {
         EventGroup eventGroup = initializeEvents(order);
         EventGroupFacade eventGroupFacade = EventGroupFacade.of(eventGroup);
-        EventManager eventManager = EventManager.of(eventGroupFacade);
+        return EventManager.of(eventGroupFacade);
+    }
 
+    private void displayGiftAndBenefits(EventManager eventManager) {
         outputView.printPresent(eventManager.gift());
         outputView.printBenefit(eventManager.getEventDetails());
         outputView.printTotalBenefit(eventManager.totalBenefit());
-        displayAfterTotalPrice(eventManager.actualBenefit(), order.getBeforeTotalPrice(), eventManager.totalBenefit());
     }
 
     public void displayAfterTotalPrice(Integer actualBenefit, Integer beforeTotalPrice, Integer totalBenefit) {
@@ -91,15 +96,37 @@ public class ChristmasController {
     }
 
     private EventGroup initializeEvents(Order order) {
+        Map<EventType, EventStrategy> events = createEventStrategies(order);
+        return EventGroup.of(order, events);
+    }
+
+    private Map<EventType, EventStrategy> createEventStrategies(Order order) {
         Map<EventType, EventStrategy> events = new HashMap<>();
 
         events.put(EventType.PRESENT, PresentEventStrategy.from(order.getBeforeTotalPrice()));
-        events.put(EventType.D_DAY, DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
-        events.put(EventType.WEEKDAY, WeekdayEventStrategy.of(order.getOrderDate(),
-                order.findMenuCount(MenuType.DESSERT)));
-        events.put(EventType.WEEKEND, WeekendEventStrategy.of(order.getOrderDate(),
-                order.findMenuCount(MenuType.MAIN)));
-        events.put(EventType.SPECIAL, SpecialEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice()));
-        return EventGroup.of(order, events);
+        events.put(EventType.D_DAY, createDdayEventStrategy(order));
+        events.put(EventType.WEEKDAY, createWeekdayEventStrategy(order));
+        events.put(EventType.WEEKEND, createWeekendEventStrategy(order));
+        events.put(EventType.SPECIAL, createSpecialEventStrategy(order));
+
+        return events;
+    }
+
+    private EventStrategy createDdayEventStrategy(Order order) {
+        return DdayEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice());
+    }
+
+    private EventStrategy createWeekdayEventStrategy(Order order) {
+        int dessertCount = order.findMenuCount(MenuType.DESSERT);
+        return WeekdayEventStrategy.of(order.getOrderDate(), dessertCount);
+    }
+
+    private EventStrategy createWeekendEventStrategy(Order order) {
+        int mainCount = order.findMenuCount(MenuType.MAIN);
+        return WeekendEventStrategy.of(order.getOrderDate(), mainCount);
+    }
+
+    private EventStrategy createSpecialEventStrategy(Order order) {
+        return SpecialEventStrategy.of(order.getOrderDate(), order.getBeforeTotalPrice());
     }
 }
