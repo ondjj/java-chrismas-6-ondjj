@@ -8,10 +8,9 @@ import static christmas.util.Constants.ZERO;
 import christmas.util.enums.EventType;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SpecialEventStrategy extends EventDetailsHandler implements EventStrategy {
+public class SpecialEventStrategy extends EventDetailsHandler<SpecialEventStrategy> {
     private static final int SPECIAL_DISCOUNT = 1_000;
     private static final int CHRISTMAS = 25;
 
@@ -19,6 +18,7 @@ public class SpecialEventStrategy extends EventDetailsHandler implements EventSt
     private final Integer totalPrice;
 
     private SpecialEventStrategy(final Integer day, final Integer totalPrice) {
+        super(EventType.SPECIAL);
         this.date = LocalDate.of(YEAR, MONTH, day);
         this.totalPrice = totalPrice;
     }
@@ -36,24 +36,8 @@ public class SpecialEventStrategy extends EventDetailsHandler implements EventSt
     }
 
     @Override
-    public EventType getEventType() {
-        return EventType.SPECIAL;
-    }
-
-    @Override
     public Map<String, String> extractEventDetails() {
         return createEventDetails(getEventType(), itemDiscount());
-    }
-
-    @Override
-    public Map<String, String> createEventDetails(final EventType eventType, final Integer discount) {
-        Map<String, String> details = new LinkedHashMap<>();
-        if (isValid(discount)) {
-            putDetails(eventType, discount, details);
-            return details;
-        }
-        putNone(eventType, details);
-        return details;
     }
 
     private boolean isEventDate() {

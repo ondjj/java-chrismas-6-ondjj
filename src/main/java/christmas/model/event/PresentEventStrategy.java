@@ -3,16 +3,16 @@ package christmas.model.event;
 import static christmas.util.Constants.ZERO;
 
 import christmas.util.enums.EventType;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PresentEventStrategy extends EventDetailsHandler implements EventStrategy {
+public class PresentEventStrategy extends EventDetailsHandler<PresentEventStrategy> {
     private static final int PRESENT_DISCOUNT = 25_000;
     private static final int PRESENT_RANGE = 120_000;
 
     private final Integer price;
 
     private PresentEventStrategy(final Integer price) {
+        super(EventType.PRESENT);
         this.price = price;
     }
 
@@ -29,24 +29,8 @@ public class PresentEventStrategy extends EventDetailsHandler implements EventSt
     }
 
     @Override
-    public EventType getEventType() {
-        return EventType.PRESENT;
-    }
-
-    @Override
     public Map<String, String> extractEventDetails() {
         return createEventDetails(getEventType(), itemDiscount());
-    }
-
-    @Override
-    public Map<String, String> createEventDetails(final EventType eventType, final Integer discount) {
-        Map<String, String> details = new LinkedHashMap<>();
-        if (isValid(discount)) {
-            putDetails(eventType, discount, details);
-            return details;
-        }
-        putNone(eventType, details);
-        return details;
     }
 
     public String getPresent() {

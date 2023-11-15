@@ -1,13 +1,16 @@
 package christmas.model.event;
 
-import static christmas.util.Constants.*;
+import static christmas.util.Constants.LIMIT_RANGE;
+import static christmas.util.Constants.MONTH;
+import static christmas.util.Constants.YEAR;
+import static christmas.util.Constants.ZERO;
 
 import christmas.util.enums.EventType;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DdayEventStrategy extends EventDetailsHandler implements EventStrategy {
+public class DdayEventStrategy extends EventDetailsHandler<DdayEventStrategy> {
     private static final int D_DAY_DISCOUNT = 900;
     private static final int CHRISTMAS = 25;
     private static final int INCREMENT = 100;
@@ -16,6 +19,7 @@ public class DdayEventStrategy extends EventDetailsHandler implements EventStrat
     private final Integer totalPrice;
 
     private DdayEventStrategy(final Integer day, final Integer totalPrice) {
+        super(EventType.D_DAY);
         this.date = LocalDate.of(YEAR, MONTH, day);
         this.totalPrice = totalPrice;
     }
@@ -33,28 +37,12 @@ public class DdayEventStrategy extends EventDetailsHandler implements EventStrat
     }
 
     @Override
-    public EventType getEventType() {
-        return EventType.D_DAY;
-    }
-
-    @Override
     public Map<String, String> extractEventDetails() {
         Map<String, String> details = new LinkedHashMap<>();
         if (isEventDate()) {
             return createEventDetails(getEventType(), itemDiscount());
         }
         details.put(getEventType().getNone(), getEventType().getNone());
-        return details;
-    }
-
-    @Override
-    public Map<String, String> createEventDetails(final EventType eventType, final Integer discount) {
-        Map<String, String> details = new LinkedHashMap<>();
-        if (isValid(discount)) {
-            putDetails(eventType, discount, details);
-            return details;
-        }
-        putNone(eventType, details);
         return details;
     }
 
