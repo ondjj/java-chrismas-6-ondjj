@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.model.event.WeekdayEventStrategy;
 import org.junit.jupiter.api.BeforeEach;

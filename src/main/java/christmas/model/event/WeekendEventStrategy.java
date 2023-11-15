@@ -9,7 +9,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class WeekendEventStrategy extends EventDetailsHandler<WeekendEventStrategy> {
+public class WeekendEventStrategy extends BaseEventHandler<WeekendEventStrategy> {
     private static final int WEEK_END_DISCOUNT = 2_023;
 
     private final LocalDate date;

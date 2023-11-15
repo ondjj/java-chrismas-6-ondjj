@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DdayEventStrategy extends EventDetailsHandler<DdayEventStrategy> {
+public class DdayEventStrategy extends BaseEventHandler<DdayEventStrategy> {
     private static final int D_DAY_DISCOUNT = 900;
     private static final int CHRISTMAS = 25;
     private static final int INCREMENT = 100;

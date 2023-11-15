@@ -5,7 +5,7 @@ import static christmas.util.Constants.ZERO;
 import christmas.util.enums.EventType;
 import java.util.Map;
 
-public class PresentEventStrategy extends EventDetailsHandler<PresentEventStrategy> {
+public class PresentEventStrategy extends BaseEventHandler<PresentEventStrategy> {
     private static final int PRESENT_DISCOUNT = 25_000;
     private static final int PRESENT_RANGE = 120_000;
 

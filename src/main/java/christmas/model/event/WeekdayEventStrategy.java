@@ -9,7 +9,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class WeekdayEventStrategy extends EventDetailsHandler<WeekdayEventStrategy> {
+public class WeekdayEventStrategy extends BaseEventHandler<WeekdayEventStrategy> {
     private static final int WEEK_DAY_DISCOUNT = 2_023;
 
     private final LocalDate date;

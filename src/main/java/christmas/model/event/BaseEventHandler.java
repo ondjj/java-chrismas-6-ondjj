@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class EventDetailsHandler<T> implements EventStrategy{
+public class BaseEventHandler<T> implements EventStrategy{
     private final EventType eventType;
 
-    public EventDetailsHandler(EventType eventType) {
+    public BaseEventHandler(EventType eventType) {
         this.eventType = eventType;
     }
 

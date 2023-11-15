@@ -10,7 +10,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class SpecialEventStrategy extends EventDetailsHandler<SpecialEventStrategy> {
+public class SpecialEventStrategy extends BaseEventHandler<SpecialEventStrategy> {
     private static final int SPECIAL_DISCOUNT = 1_000;
     private static final int CHRISTMAS = 25;
 

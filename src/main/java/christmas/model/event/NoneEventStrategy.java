@@ -7,7 +7,7 @@ import christmas.util.enums.EventType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NoneEventStrategy extends EventDetailsHandler<NoneEventStrategy> {
+public class NoneEventStrategy extends BaseEventHandler<NoneEventStrategy> {
 
     private static final NoneEventStrategy INSTANCE = new NoneEventStrategy();
 
